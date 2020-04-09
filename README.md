@@ -72,7 +72,7 @@ sudo certbot --apache
 
 7. Wait! Set file permissions.
 
-`bash
+```bash
 bash set_permissions.sh
 ```
 
