@@ -13,13 +13,13 @@ This small and simple Lumen application takes images (via a URL) and resizes the
 1. Clone this repository into your server, e.g.:
 
 ```bash
-git clone git@gitlab.com:Finnito/AutoImageResizer.git /srv/imgs.lesueur.nz
+git clone git@gitlab.com:Finnito/AutoImageResizer.git /srv/img.lesueur.nz
 ```
 
 2. Jump into that directory and install using `composer`
 
 ```bash
-cd /srv/imgs.lesueur.nz
+cd /srv/img.lesueur.nz
 composer install
 ```
 
@@ -46,19 +46,19 @@ URL_CONSTRAINT=finn.lesueur.nz,upload.wikimedia.org #C an comma separate multipl
 
 ```bash
 cd /etc/apache2/sites-available/
-sudo nano imgs.lesueur.nz.conf
+sudo nano img.lesueur.nz.conf
 ```
 
 ```
 <VirtualHost *:80>
-    ServerName imgs.lesueur.nz
-    ServerAlias www.imgs.lesueur.nz
-    DocumentRoot /srv/imgs.lesueur.nz/public/
+    ServerName img.lesueur.nz
+    ServerAlias www.img.lesueur.nz
+    DocumentRoot /srv/img.lesueur.nz/public/
 </VirtualHost>
 ```
 
 ```bash
-sudo a2ensite imgs.lesueur.nz.conf
+sudo a2ensite img.lesueur.nz.conf
 sudo systemctl reload apache2
 ```
 
@@ -70,10 +70,16 @@ sudo systemctl reload apache2
 sudo certbot --apache
 ```
 
-7. Use it like this!
+7. Wait! Set file permissions.
+
+`bash
+bash set_permissions.sh
+```
+
+8. Use it like this!
 
 ```
-http://imgs.lesueur.nz/512?u=https://finn.lesueur.nz/posts/brass-monkey-bivvy/IMG_7936.jpg
+http://img.lesueur.nz/512?u=https://finn.lesueur.nz/posts/brass-monkey-bivvy/IMG_7936.jpg
 ```
 
 
