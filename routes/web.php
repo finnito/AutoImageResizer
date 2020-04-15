@@ -14,6 +14,13 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
     $filename = $splitFile[0];
     $extension = $splitFile[1];
 
+    $headers = array(
+        "Cache-Control" => "public",
+        "Cache-Control" => "no-cache",
+        "Cache-Control" => "max-age=31536000",
+        "Cache-Control" => "must-revalidate",
+    );
+
     /**
      * Only allow images from a given host
      * in the .env file.
@@ -45,7 +52,7 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
      * 2. Does the base file exist?
      *      yes - continue
      *      no  - save it to disk
-     * 3. Resize the image 
+     * 3. Resize the image
      * 4. Return the image
      **/
     if ($constraint == "full") {
@@ -56,7 +63,7 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
     
     $specificFileExists = Storage::disk("local")->exists("{$parsedURL['host']}/".$specificFileName);
     if ($specificFileExists) {
-        return Storage::disk("local")->response("{$parsedURL['host']}/".$specificFileName);   
+        return Storage::disk("local")->response("{$parsedURL['host']}/".$specificFileName, "", $headers);
     }
             
 
@@ -113,5 +120,5 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
         //$requestedFile = $filename . "-" . $constraint . "." . $extension;
         $requestedFile = $specificFileName;
     }
-    return Storage::disk("local")->response("{$parsedURL['host']}/".$requestedFile);
+    return Storage::disk("local")->response("{$parsedURL['host']}/".$requestedFile, "", $headers);
 });
