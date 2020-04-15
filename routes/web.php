@@ -49,8 +49,8 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
      * 4. Return the image
      **/
     if ($constraint == "full") {
-        $specificFileName  $file;
-    else {
+        $specificFileName = $file;
+    } else {
         $specificFileName = $filename . "-" . $constraint . "." . $extension;
     }
     
