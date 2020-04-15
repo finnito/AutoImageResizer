@@ -36,12 +36,37 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
     if (!in_array($extension, array("jpg", "jpeg", "webp", "png"))) {
         return response()->json(['error' => "Unsupported Media Type: Only allows images of type jpg, jpeg, webp and png."], 415);
     }
+    
+    /**
+     * Order of operations
+     * 1. Does the specific file exist?
+     *      yes - return it
+     *      no  - continue
+     * 2. Does the base file exist?
+     *      yes - continue
+     *      no  - save it to disk
+     * 3. Resize the image 
+     * 4. Return the image
+     **/
+    if ($constraint == "full") {
+        $specificFileName  $file;
+    else {
+        $specificFileName = $filename . "-" . $constraint . "." . $extension;
+    }
+    
+    $specificFileExists = Storage::disk("local")->exists("{$parsedURL['host']}/".$specificFileName);
+    if ($specificFileExists) {
+        return Storage::disk("local")->response("{$parsedURL['host']}/".$specificFileName);   
+    }
+            
 
     /**
-     * Start by checking if the base image
-     * exists, and if not, saving it to disk.
+     * The specific image was not found, so we
+     * need to check if the base image exists
+     * on disk so it can be resized.
+     * If it doesn't exist, save it.
      **/
-    $baseImageExists = Storage::disk("local")->exists($file);
+    $baseImageExists = Storage::disk("local")->exists("{$parsedURL['host']}/".$file);
     if (!$baseImageExists) {
         Storage::put("{$parsedURL['host']}/{$file}", file_get_contents(
             $parsedURL["scheme"]
@@ -85,7 +110,8 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
     if ($constraint == "full") {
         $requestedFile = $file;
     } else {
-        $requestedFile = $filename . "-" . $constraint . "." . $extension;
+        //$requestedFile = $filename . "-" . $constraint . "." . $extension;
+        $requestedFile = $specificFileName;
     }
     return Storage::disk("local")->response("{$parsedURL['host']}/".$requestedFile);
 });
