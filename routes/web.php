@@ -16,7 +16,6 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
 
     $headers = array(
         "Cache-Control" => "public",
-        "Cache-Control" => "no-cache",
         "Cache-Control" => "max-age=31536000",
         "Cache-Control" => "must-revalidate",
     );
