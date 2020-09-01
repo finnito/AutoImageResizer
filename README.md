@@ -10,10 +10,6 @@ This small and simple Lumen application takes images (via a URL) and resizes the
 
 Sound good?
 
-<a href="https://www.buymeacoffee.com/FinnLeSueur" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="max-width: 150px; width: 150px !important; height: auto;"/>
-</a>
-
 
 ## 🏁 Getting Started
 
