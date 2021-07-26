@@ -93,6 +93,8 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
             storage_path("app/{$parsedURL['host']}/{$file}")
         );
 
+        $resizedImage->orientate();
+
         /**
          * If portrait, resize on the width,
          * otherwise resize on the height.
@@ -106,7 +108,7 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
                 $constraint->aspectRatio();
             });
         }
-        $resizedImage->orientate()->save(storage_path("app/{$parsedURL['host']}/{$specificFileName}"), 100);
+        $resizedImage->save(storage_path("app/{$parsedURL['host']}/{$specificFileName}"), 100);
     }
 
     /**
