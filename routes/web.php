@@ -106,7 +106,7 @@ $router->get('/{constraint}', function (Request $request, $constraint) {
                 $constraint->aspectRatio();
             });
         }
-        $resizedImage->save(storage_path("app/{$parsedURL['host']}/{$specificFileName}"), 100);
+        $resizedImage->orientate()->save(storage_path("app/{$parsedURL['host']}/{$specificFileName}"), 100);
     }
 
     /**
